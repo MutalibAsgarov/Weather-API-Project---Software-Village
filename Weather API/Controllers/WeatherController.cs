@@ -68,5 +68,92 @@ namespace Weather_API.Controllers
                 });
             }
         }
+        [HttpGet("forecast")]
+        public async Task<IActionResult> GetForecast([FromQuery] string? city)
+        {
+            if (string.IsNullOrWhiteSpace(city))
+            {
+                return BadRequest(new
+                {
+                    success = false,
+                    data = (object?)null,
+                    message = "City is required"
+                });
+            }
+
+            try
+            {
+                var data = await _weatherService.GetForecastAsync(city);
+
+                return Ok(new
+                {
+                    success = true,
+                    data,
+                    message = "Forecast retrieved successfully"
+                });
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound(new
+                {
+                    success = false,
+                    data = (object?)null,
+                    message = "City not found"
+                });
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    data = (object?)null,
+                    message = "An unexpected error occurred"
+                });
+            }
+        }
+
+        [HttpGet("rain-probability")]
+        public async Task<IActionResult> GetRainProbability([FromQuery] string? city)
+        {
+            if (string.IsNullOrWhiteSpace(city))
+            {
+                return BadRequest(new
+                {
+                    success = false,
+                    data = (object?)null,
+                    message = "City is required"
+                });
+            }
+
+            try
+            {
+                var data = await _weatherService.GetRainProbabilityAsync(city);
+
+                return Ok(new
+                {
+                    success = true,
+                    data,
+                    message = "Rain probability retrieved successfully"
+                });
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound(new
+                {
+                    success = false,
+                    data = (object?)null,
+                    message = "City not found"
+                });
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    data = (object?)null,
+                    message = "An unexpected error occurred"
+                });
+            }
+        }
     }
 }
