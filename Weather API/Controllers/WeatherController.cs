@@ -68,6 +68,7 @@ namespace Weather_API.Controllers
                 });
             }
         }
+
         [HttpGet("forecast")]
         public async Task<IActionResult> GetForecast([FromQuery] string? city)
         {

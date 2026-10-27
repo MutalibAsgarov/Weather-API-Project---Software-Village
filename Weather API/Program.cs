@@ -1,3 +1,4 @@
+
 using Weather_API.Services;
 using Weather_API.Services.Interfaces;
 
@@ -29,6 +30,7 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient<IWeatherService, WeatherService>();
 
@@ -41,7 +43,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(options =>
     {
         options.SwaggerEndpoint("/swagger/v1/swagger.json", "Weather API V1");
-        options.RoutePrefix = string.Empty;
+        options.RoutePrefix = "docs";
     });
 }
 
